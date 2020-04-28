@@ -2,13 +2,12 @@
 
 class ChatChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from 'some_channel'　# すべてのクライアントに配信
-    stream_from "room_#{params[:id]}"
+    stream_from 'chat_channel'
   end
 
   def speak(data)
-    # ActionCable.server.broadcast('some_channel', 'hgge')　# すべてのクライアントに配信
-    ActionCable.server.broadcast("room_#{data[:id]}", 'hgge')
+    # ブロードキャスト
+    ActionCable.server.broadcast('chat_channel', data['text'])
   end
 
   def unsubscribed
